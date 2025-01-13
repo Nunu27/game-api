@@ -1,6 +1,35 @@
 @GameApi_HostAddress = http://localhost:5298
 
-GET {{GameApi_HostAddress}}/weatherforecast/
+GET {{GameApi_HostAddress}}/api/games
 Accept: application/json
 
 ###
+POST {{GameApi_HostAddress}}/api/games
+Accept: application/json
+Content-Type: application/json
+
+{
+    "title": "Game 1",
+    "genre": "Action",
+    "price": 10.99
+}
+
+###
+GET {{GameApi_HostAddress}}/api/games/1
+Accept: application/json
+
+###
+PUT {{GameApi_HostAddress}}/api/games/1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "id": 1,
+    "title": "Game 2",
+    "genre": "Action",
+    "price": 10.99
+}
+
+###
+DELETE {{GameApi_HostAddress}}/api/games/1
+Accept: application/json
