@@ -11,14 +11,14 @@ public class GamesController(GameContext context) : ControllerBase
 
     // GET: api/games
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Game>>> GetGames()
+    public async Task<ActionResult<IEnumerable<GameDTO>>> GetGames()
     {
-        return await context.Games.ToListAsync();
+        return await context.Games.Select(x => ItemToDTO(x)).ToListAsync();
     }
 
     // GET: api/games/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Game>> GetGame(long id)
+    public async Task<ActionResult<GameDTO>> GetGame(long id)
     {
         var game = await context.Games.FindAsync(id);
 
@@ -27,7 +27,7 @@ public class GamesController(GameContext context) : ControllerBase
             return NotFound();
         }
 
-        return game;
+        return ItemToDTO(game);
     }
 
     // PUT: api/games/5
@@ -69,7 +69,7 @@ public class GamesController(GameContext context) : ControllerBase
         context.Games.Add(game);
         await context.SaveChangesAsync();
 
-        return CreatedAtAction("GetGame", new { id = game.Id }, game);
+        return CreatedAtAction("GetGame", new { id = game.Id }, ItemToDTO(game));
     }
 
     // DELETE: api/games/5
@@ -92,4 +92,12 @@ public class GamesController(GameContext context) : ControllerBase
     {
         return context.Games.Any(e => e.Id == id);
     }
+
+    private static GameDTO ItemToDTO(Game game) =>
+       new()
+       {
+           Id = game.Id,
+           Title = game.Title,
+           Price = game.Price
+       };
 }
