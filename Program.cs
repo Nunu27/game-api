@@ -1,3 +1,4 @@
+using GameApi.Middlewares;
 using GameApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -23,10 +24,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseMiddleware<ResponseMiddleware>();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
