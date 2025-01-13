@@ -8,7 +8,6 @@ namespace GameApi.Controllers;
 [ApiController]
 public class GamesController(GameContext context) : ControllerBase
 {
-
     // GET: api/games
     [HttpGet]
     public async Task<ActionResult<IEnumerable<GameDTO>>> GetGames()
